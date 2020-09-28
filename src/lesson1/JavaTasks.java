@@ -145,8 +145,7 @@ public class JavaTasks {
      */
     // Эффективность - O(nlogn)
     // Ресурсы - O(n)
-    static public void sortTemperatures(String inputName, String outputName) throws IOException, ParseException {
-        FileWriter fileWriter = new FileWriter(new File(outputName), StandardCharsets.UTF_8);
+    static public void sortTemperatures(String inputName, String outputName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(inputName, StandardCharsets.UTF_8));
         TreeMap<Double, Integer> treeMap = new TreeMap<>();
         String line = br.readLine();
@@ -160,14 +159,15 @@ public class JavaTasks {
             line = br.readLine();
         }
         Double[] keys = treeMap.keySet().toArray(new Double[0]);
-        for (double key : keys) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < treeMap.get(key); i++) {
-                sb.append(key).append("\n");
+        try (FileWriter fileWriter = new FileWriter(new File(outputName), StandardCharsets.UTF_8)) {
+            for (double key : keys) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < treeMap.get(key); i++) {
+                    sb.append(key).append("\n");
+                }
+                fileWriter.write(sb.toString());
             }
-            fileWriter.write(sb.toString());
         }
-        fileWriter.close();
     }
 
     /**
