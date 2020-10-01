@@ -4,6 +4,7 @@ import kotlin.NotImplementedError;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
@@ -143,29 +144,25 @@ public class JavaTasks {
      * 99.5
      * 121.3
      */
-    // Эффективность - O(nlogn)
+    // Эффективность - O(n + k)
     // Ресурсы - O(n)
     static public void sortTemperatures(String inputName, String outputName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(inputName, StandardCharsets.UTF_8));
-        TreeMap<Double, Integer> treeMap = new TreeMap<>();
         String line = br.readLine();
+        List<Integer> tempList = new ArrayList<>();
+        final int MIN_VALUE = 273 * 10;
+        int max = Integer.MIN_VALUE;
         while (line != null) {
-            double number = Double.parseDouble(line);
-            if (treeMap.containsKey(number)) {
-                treeMap.put(number, treeMap.get(number) + 1);
-            } else {
-                treeMap.put(number, 1);
-            }
+            int number = (int) ((Double.parseDouble(line) * 10 + MIN_VALUE));
+            if (number >= max) max = number;
+            tempList.add(number);
             line = br.readLine();
         }
-        Double[] keys = treeMap.keySet().toArray(new Double[0]);
-        try (FileWriter fileWriter = new FileWriter(new File(outputName), StandardCharsets.UTF_8)) {
-            for (double key : keys) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < treeMap.get(key); i++) {
-                    sb.append(key).append("\n");
-                }
-                fileWriter.write(sb.toString());
+        int[] sortedArray = Sorts.countingSort(tempList.stream().mapToInt(e -> e).toArray(), max);
+        try (FileWriter fileWriter = new FileWriter(new File(outputName),StandardCharsets.UTF_8)) {
+            for (int j : sortedArray) {
+                double output = (j - MIN_VALUE) / 10.0;
+                fileWriter.write(output + "\n");
             }
         }
     }
