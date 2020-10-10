@@ -162,7 +162,7 @@ public class JavaTasks {
         try (FileWriter fileWriter = new FileWriter(new File(outputName),StandardCharsets.UTF_8)) {
             for (int j : sortedArray) {
                 double output = (j - MIN_VALUE) / 10.0;
-                fileWriter.write(output + "\n");
+                fileWriter.write(output + "\n");    
             }
         }
     }
