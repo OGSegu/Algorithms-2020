@@ -3,7 +3,6 @@ package lesson2;
 import kotlin.NotImplementedError;
 import kotlin.Pair;
 
-import java.io.PrintWriter;
 import java.util.Arrays;
 
 @SuppressWarnings("unused")
@@ -85,8 +84,13 @@ public class JavaAlgorithms {
      * Общий комментарий: решение из Википедии для этой задачи принимается,
      * но приветствуется попытка решить её самостоятельно.
      */
+    // Эффективность - O(n)
+    // Ресурсы - O(1)
     static public int josephTask(int menNumber, int choiceInterval) {
-        throw new NotImplementedError();
+        int k = 0;
+        for (int i = 2; i <= menNumber; i++)
+            k = (k + choiceInterval) % i;
+        return k + 1;
     }
 
     /**

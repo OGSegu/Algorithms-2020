@@ -66,6 +66,7 @@ abstract class AbstractAlgorithmsTests {
         assertEquals(50000000, josephTask(50000000, 1))
         assertEquals(3, josephTask(8, 5))
         assertEquals(28, josephTask(40, 3))
+        assertEquals(37, josephTask(50, 2))
         var menNumber = 2
         for (i in 1..20) {
             assertEquals(1, josephTask(menNumber, 2))
@@ -74,7 +75,7 @@ abstract class AbstractAlgorithmsTests {
     }
 
     fun longestCommonSubstring(longestCommonSubstring: (String, String) -> String) {
-        //assertEquals("", longestCommonSubstring("мой мир", "я"))
+        assertEquals("", longestCommonSubstring("мой мир", "я"))
         assertEquals("UENC", longestCommonSubstring("SUBEUENCS", "SUBSEQUENCE"))
         assertEquals("зд", longestCommonSubstring("здравствуй мир", "мы здесь"))
         assertEquals("СЕРВАТОР", longestCommonSubstring("ОБСЕРВАТОРИЯ", "КОНСЕРВАТОРЫ"))
@@ -145,5 +146,6 @@ abstract class AbstractAlgorithmsTests {
         assertEquals(148933, calcPrimesNumber(2000000))
         assertEquals(348513, calcPrimesNumber(5000000))
         assertEquals(664579, calcPrimesNumber(10000000))
+        assertEquals(3294198, calcPrimesNumber(55213321))
     }
 }
