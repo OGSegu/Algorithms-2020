@@ -100,8 +100,34 @@ public class JavaAlgorithms {
      * Если имеется несколько самых длинных общих подстрок одной длины,
      * вернуть ту из них, которая встречается раньше в строке first.
      */
-    static public String longestCommonSubstring(String firs, String second) {
-        throw new NotImplementedError();
+    // Эффективность - O(n * m)
+    // Ресуры - O(n * m)
+    static public String longestCommonSubstring(String first, String second) {
+        char[] firstChars = first.toCharArray();
+        char[] secondChars = second.toCharArray();
+        int maxFirstIndex = 0;
+        int maxSecondIndex = 0;
+        int[][] array = new int[firstChars.length + 1][secondChars.length + 1];
+        int max = 0;
+        for (int i = 1; i <= firstChars.length; i++) {
+            for (int j = 1; j <= secondChars.length; j++) {
+                if (firstChars[i - 1] == secondChars[j - 1]) {
+                    array[i][j] = array[i - 1][j - 1] + 1;
+                    if (array[i][j] > max) {
+                        max = array[i][j];
+                        maxFirstIndex = i;
+                        maxSecondIndex = j;
+                    }
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (array[maxFirstIndex][maxSecondIndex] > 0) {
+            sb.append(firstChars[maxFirstIndex - 1]);
+            maxFirstIndex--;
+            maxSecondIndex--;
+        }
+        return sb.reverse().toString();
     }
 
     /**
