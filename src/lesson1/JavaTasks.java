@@ -76,7 +76,6 @@ public class JavaTasks {
     // Эффективность - O(nlogn)
     // Ресурсы - O(n)
     static public void sortAddresses(String inputName, String outputName) throws IOException {
-        FileWriter fileWriter = new FileWriter(new File(outputName), StandardCharsets.UTF_8);
         Map<String, TreeSet<String>> treeMap = new TreeMap<>((s1, s2) -> {
             String[] info1 = s1.split(" ");
             String[] info2 = s2.split(" ");
@@ -99,19 +98,20 @@ public class JavaTasks {
             line = br.readLine();
         }
         String[] keys = treeMap.keySet().toArray(new String[0]);
-        for (String key : keys) {
-            StringBuilder sb = new StringBuilder(key).append(" - ");
-            for (String name : treeMap.get(key)) {
-                sb.append(name);
-                if (!treeMap.get(key).last().equals(name)) {
-                    sb.append(", ");
-                } else {
-                    sb.append("\n");
+        try (FileWriter fileWriter = new FileWriter(new File(outputName), StandardCharsets.UTF_8)) {
+            for (String key : keys) {
+                StringBuilder sb = new StringBuilder(key).append(" - ");
+                for (String name : treeMap.get(key)) {
+                    sb.append(name);
+                    if (!treeMap.get(key).last().equals(name)) {
+                        sb.append(", ");
+                    } else {
+                        sb.append("\n");
+                    }
                 }
+                fileWriter.write(sb.toString());
             }
-            fileWriter.write(sb.toString());
         }
-        fileWriter.close();
     }
 
     /**
@@ -159,10 +159,10 @@ public class JavaTasks {
             line = br.readLine();
         }
         int[] sortedArray = Sorts.countingSort(tempList.stream().mapToInt(e -> e).toArray(), max);
-        try (FileWriter fileWriter = new FileWriter(new File(outputName),StandardCharsets.UTF_8)) {
+        try (FileWriter fileWriter = new FileWriter(new File(outputName), StandardCharsets.UTF_8)) {
             for (int j : sortedArray) {
                 double output = (j - MIN_VALUE) / 10.0;
-                fileWriter.write(output + "\n");    
+                fileWriter.write(output + "\n");
             }
         }
     }
