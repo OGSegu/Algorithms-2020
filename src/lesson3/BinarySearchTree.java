@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 // attention: Comparable is supported but Comparator is not
+
+// Тесты для этого лессона не делал, они показались полными
 public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> implements CheckableSortedSet<T> {
 
     private static class Node<T> {
@@ -96,6 +98,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
      * <p>
      * Средняя
      */
+    // Эффективность O(n)
     @Override
     public boolean remove(Object o) {
         if (!contains(o))
@@ -174,6 +177,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          * Средняя
          */
         @Override
+        // Эффективность O(1)
         public boolean hasNext() {
             return !stack.isEmpty();
         }
@@ -191,6 +195,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          * <p>
          * Средняя
          */
+        // Эффективность O(logN)
         @Override
         public T next() {
             if (stack.empty())
@@ -214,6 +219,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
          * <p>
          * Сложная
          */
+        // Эффективность O(N)
         @Override
         public void remove() {
             if (current == null)
