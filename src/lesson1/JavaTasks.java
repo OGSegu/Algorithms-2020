@@ -4,12 +4,7 @@ import kotlin.NotImplementedError;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.*;
-
-import static lesson1.Sorts.mergeSort;
 
 @SuppressWarnings("unused")
 public class JavaTasks {
