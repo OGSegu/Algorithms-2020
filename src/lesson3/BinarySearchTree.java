@@ -151,7 +151,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
 
     public class BinarySearchTreeIterator implements Iterator<T> {
 
-        Stack<Node<T>> stack = new Stack<>();
+        Deque<Node<T>> stack = new ArrayDeque<>();
         Node<T> current = null;
 
         private BinarySearchTreeIterator() {
@@ -198,7 +198,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends AbstractSet<T> im
         // Эффективность O(logN)
         @Override
         public T next() {
-            if (stack.empty())
+            if (stack.isEmpty())
                 throw new IllegalStateException();
             Node<T> cur = stack.pop();
             if (cur.right != null)
