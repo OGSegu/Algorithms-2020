@@ -67,6 +67,11 @@ abstract class AbstractBinarySearchTreeTest {
                     "The tree doesn't have the element $element from the control set."
                 )
             }
+            val binaryTree = create();
+            binaryTree.add(1);
+            val expectedSize = binaryTree.size;
+            binaryTree.add(1);
+            assertEquals(expectedSize, binaryTree.size);
         }
     }
 
