@@ -1,6 +1,5 @@
 package lesson5;
 
-import kotlin.NotImplementedError;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractSet;
@@ -16,6 +15,10 @@ public class OpenAddressingSet<T> extends AbstractSet<T> {
     private final Object[] storage;
 
     private int size = 0;
+
+    private enum State {
+        DELETED
+    }
 
     private int startingIndex(Object element) {
         return element.hashCode() & (0x7FFFFFFF >> (31 - bits));
@@ -67,7 +70,7 @@ public class OpenAddressingSet<T> extends AbstractSet<T> {
         int startingIndex = startingIndex(t);
         int index = startingIndex;
         Object current = storage[index];
-        while (current != null) {
+        while (current != null && current != State.DELETED) {
             if (current.equals(t)) {
                 return false;
             }
@@ -93,9 +96,22 @@ public class OpenAddressingSet<T> extends AbstractSet<T> {
      *
      * Средняя
      */
+    // Трудоемкость - O(n)
+    // Ресурсоемкость O(1)
     @Override
     public boolean remove(Object o) {
-        return super.remove(o);
+        int index = startingIndex(o);
+        T currentElement = (T) storage[index];
+        while (currentElement != null && currentElement != State.DELETED) {
+            if (currentElement.equals(o)) {
+                storage[index] = State.DELETED;
+                size--;
+                return true;
+            }
+            index = (index + 1) % capacity;
+            currentElement = (T) storage[index];
+        }
+        return false;
     }
 
     /**
@@ -111,7 +127,47 @@ public class OpenAddressingSet<T> extends AbstractSet<T> {
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        // TODO
-        throw new NotImplementedError();
+        return new OpenAddressingIterator();
+    }
+
+    class OpenAddressingIterator implements Iterator<T> {
+        private int index = 0;
+        private int count = 0;
+        private T localLast = null;
+
+
+        // Трудоемкость O(1)
+        // Ресурсоемкость O(1)
+        @Override
+        public boolean hasNext() {
+            return count < size;
+        }
+
+        // Трудоемкость O(n)
+        // Ресурсоемкость O(1)
+        @Override
+        public T next() {
+            if (!hasNext())
+                throw new IllegalStateException();
+            while (storage[index] == null || storage[index] == State.DELETED) {
+                index++;
+            }
+            localLast = (T) storage[index];
+            count++;
+            index++;
+            return localLast;
+        }
+
+        // Трудоемкость O(1)
+        // Ресурсоемкость O(1)
+        @Override
+        public void remove() {
+            if (localLast == null)
+                throw new IllegalStateException();
+            storage[index - 1] = State.DELETED;
+            localLast = null;
+            size--;
+            count--;
+        }
     }
 }

@@ -11,7 +11,7 @@ import kotlin.test.assertTrue
 abstract class AbstractOpenAddressingSetTest {
 
     abstract fun <T : Any> create(bits: Int): MutableSet<T>
-
+// Тесты работают рандомно, нет смысла добавлять новые
     protected fun doAddTest() {
         val random = Random()
         for (iteration in 1..100) {
