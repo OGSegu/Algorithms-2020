@@ -65,25 +65,35 @@ public class JavaDynamicTasks {
      * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
      */
     public static List<Integer> longestIncreasingSubSequence(List<Integer> list) {
-//        if (list.size() <= 1)
-//            return list;
-//        int[] d = new int[list.size()];
-//        for (int i = 1; i < d.length; i++) {
-//            int currentNumber = list.get(i);
-//            for (int j = 0; j < i; j++) {
-//                if (currentNumber > list.get(j))
-//                    d[i] = Math.max(d[i], d[j] + 1);
-//            }
-//        }
-//        int index = 0;
-//        int value = Integer.MIN_VALUE;
-//        for (int i = 0; i < d.length; i++) {
-//            if (d[i] > value) {
-//                value = d[i];
-//                index = i;
-//            }
-//        }
-    throw new NotImplementedError();
+        if (list.size() <= 1)
+            return list;
+        int[] d = new int[list.size()];
+        int[] p = new int[list.size()];
+        p[0] = -1;
+        d[0] = 1;
+        for (int i = 0; i < d.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (list.get(j) < list.get(i) && d[j] + 1 > d[i]) {
+                    d[i] = d[j] + 1;
+                    p[i] = j;
+                }
+            }
+        }
+        int index = 0;
+        int value = Integer.MIN_VALUE;
+        for (int i = 0; i < d.length; i++) {
+            if (d[i] > value) {
+                value = d[i];
+                index = i;
+            }
+        }
+        List<Integer> resultList = new ArrayList<>();
+        while (index != -1) {
+            resultList.add(list.get(index));
+            index = p[index];
+        }
+        Collections.reverse(resultList);
+        return resultList;
     }
 
     /**
