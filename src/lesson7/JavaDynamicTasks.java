@@ -21,6 +21,8 @@ public class JavaDynamicTasks {
      * Если есть несколько самых длинных общих подпоследовательностей, вернуть любую из них.
      * При сравнении подстрок, регистр символов *имеет* значение.
      */
+    // Эффективность - O(m * n)
+    // Трудоемкость - O(n)
     public static String longestCommonSubSequence(String first, String second) {
         int[][] d = new int[first.length() + 1][second.length() + 1];
         StringBuilder[][] sbArray = new StringBuilder[first.length() + 1][second.length() + 1];
@@ -64,6 +66,8 @@ public class JavaDynamicTasks {
      * то вернуть ту, в которой числа расположены раньше (приоритет имеют первые числа).
      * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
      */
+    // Эффективность - O(n^2)
+    // Трудоемкость - O(n)
     public static List<Integer> longestIncreasingSubSequence(List<Integer> list) {
         if (list.size() <= 1)
             return list;
